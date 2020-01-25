@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Git Repo Demo</string>
+    <string name="git_repositories">Github Repositories</string>
 </resources>
