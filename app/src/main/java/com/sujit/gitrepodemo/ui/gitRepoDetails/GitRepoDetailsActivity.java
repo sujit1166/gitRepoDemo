@@ -1,20 +1,21 @@
-package com.sujit.gitrepodemo.ui.gitRepos;
+package com.sujit.gitrepodemo.ui.gitRepoDetails;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
 import com.sujit.gitrepodemo.R;
+import com.sujit.gitrepodemo.ui.gitRepoDetails.com.sujit.gitrepodemo.ui.gitRepoDetails.GitRepoDetailsFragment;
 
-public class GitRepoListActivity extends AppCompatActivity {
+public class GitRepoDetailsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.git_repo_list_activity);
+        setContentView(R.layout.git_repo_details_activity);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, GitRepoListFragment.newInstance())
+                    .replace(R.id.container, GitRepoDetailsFragment.newInstance())
                     .commitNow();
         }
     }

@@ -1,4 +1,4 @@
-package com.sujit.gitrepodemo.ui.gitRepos.ui.gitrepolist;
+package com.sujit.gitrepodemo.ui.gitRepos;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -34,5 +34,4 @@ public class GitRepoListFragment extends Fragment {
         // TODO: Use the ViewModel
         // 
     }
-
 }

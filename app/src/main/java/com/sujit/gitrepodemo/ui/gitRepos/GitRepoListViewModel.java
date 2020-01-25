@@ -1,4 +1,4 @@
-package com.sujit.gitrepodemo.ui.gitRepos.ui.gitrepolist;
+package com.sujit.gitrepodemo.ui.gitRepos;
 
 import androidx.lifecycle.ViewModel;
 
