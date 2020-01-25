@@ -32,6 +32,7 @@ public class GitRepoListFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(GitRepoListViewModel.class);
         // TODO: Use the ViewModel
+        // 
     }
 
 }
