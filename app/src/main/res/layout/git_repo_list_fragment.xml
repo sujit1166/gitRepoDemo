@@ -35,5 +35,10 @@
                 android:maxEms="15"
                 android:text="@string/git_repositories" />
         </androidx.appcompat.widget.Toolbar>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvGitrepo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 </layout>

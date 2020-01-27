@@ -1,6 +1,6 @@
 package com.sujit.gitrepodemo.data.models;
 
-public class MyPojo
+public class GithubRepoEntity
 {
     private String tags_url;
 
