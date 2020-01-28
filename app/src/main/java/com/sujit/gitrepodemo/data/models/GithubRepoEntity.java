@@ -3,68 +3,132 @@ package com.sujit.gitrepodemo.data.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class GithubRepoEntity implements Parcelable
-{
-    private String tags_url;
+import com.google.gson.annotations.SerializedName;
 
-    private String contributors_url;
+public class GithubRepoEntity implements Parcelable {
 
-    private String notifications_url;
+    private Long id;
 
-    private String description;
+    private Long page;
 
-    private String subscription_url;
+    private Long totalPages;
 
+    private String name;
 
-    private String id;
+    @SerializedName("full_name")
+    private String fullName;
 
     private Owner owner;
 
-    private String archive_url;
+    @SerializedName("html_url")
+    private String htmlUrl;
 
+    private String description;
 
+    @SerializedName("contributors_url")
+    private String contributorsUrl;
 
-    private String pulls_url;
+    @SerializedName("created_at")
+    private String createdAt;
 
-    private String hooks_url;
+    @SerializedName("stargazers_count")
+    private Long starsCount;
 
-    private String assignees_url;
+    private Long watchers;
+    private Long forks;
+    private String language;
+    private String score;
 
-    private String trees_url;
-
-    private String node_id;
 
     protected GithubRepoEntity(Parcel in) {
-        tags_url = in.readString();
-        contributors_url = in.readString();
-        notifications_url = in.readString();
-        description = in.readString();
-        subscription_url = in.readString();
-        id = in.readString();
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readLong();
+        }
+        if (in.readByte() == 0) {
+            page = null;
+        } else {
+            page = in.readLong();
+        }
+        if (in.readByte() == 0) {
+            totalPages = null;
+        } else {
+            totalPages = in.readLong();
+        }
+        name = in.readString();
+        fullName = in.readString();
         owner = in.readParcelable(Owner.class.getClassLoader());
-        archive_url = in.readString();
-        pulls_url = in.readString();
-        hooks_url = in.readString();
-        assignees_url = in.readString();
-        trees_url = in.readString();
-        node_id = in.readString();
+        htmlUrl = in.readString();
+        description = in.readString();
+        contributorsUrl = in.readString();
+        createdAt = in.readString();
+        if (in.readByte() == 0) {
+            starsCount = null;
+        } else {
+            starsCount = in.readLong();
+        }
+        if (in.readByte() == 0) {
+            watchers = null;
+        } else {
+            watchers = in.readLong();
+        }
+        if (in.readByte() == 0) {
+            forks = null;
+        } else {
+            forks = in.readLong();
+        }
+        language = in.readString();
+        score = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(tags_url);
-        dest.writeString(contributors_url);
-        dest.writeString(notifications_url);
-        dest.writeString(description);
-        dest.writeString(subscription_url);
-        dest.writeString(id);
+        if (id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(id);
+        }
+        if (page == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(page);
+        }
+        if (totalPages == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(totalPages);
+        }
+        dest.writeString(name);
+        dest.writeString(fullName);
         dest.writeParcelable(owner, flags);
-        dest.writeString(archive_url);
-        dest.writeString(pulls_url);
-        dest.writeString(hooks_url);
-        dest.writeString(assignees_url);
-        dest.writeString(trees_url);
-        dest.writeString(node_id);
+        dest.writeString(htmlUrl);
+        dest.writeString(description);
+        dest.writeString(contributorsUrl);
+        dest.writeString(createdAt);
+        if (starsCount == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(starsCount);
+        }
+        if (watchers == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(watchers);
+        }
+        if (forks == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(forks);
+        }
+        dest.writeString(language);
+        dest.writeString(score);
     }
 
     @Override
@@ -84,55 +148,127 @@ public class GithubRepoEntity implements Parcelable
         }
     };
 
-    public String getTags_url ()
-    {
-        return tags_url;
+    public Long getId() {
+        return id;
     }
 
-    public void setTags_url (String tags_url)
-    {
-        this.tags_url = tags_url;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getContributors_url ()
-    {
-        return contributors_url;
+    public Long getPage() {
+        return page;
     }
 
-    public void setContributors_url (String contributors_url)
-    {
-        this.contributors_url = contributors_url;
+    public void setPage(Long page) {
+        this.page = page;
     }
 
-    public String getNotifications_url ()
-    {
-        return notifications_url;
+    public Long getTotalPages() {
+        return totalPages;
     }
 
-    public void setNotifications_url (String notifications_url)
-    {
-        this.notifications_url = notifications_url;
+    public void setTotalPages(Long totalPages) {
+        this.totalPages = totalPages;
     }
 
-    public String getDescription ()
-    {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
+    }
+
+    public String getHtmlUrl() {
+        return htmlUrl;
+    }
+
+    public void setHtmlUrl(String htmlUrl) {
+        this.htmlUrl = htmlUrl;
+    }
+
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription (String description)
-    {
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    public String getSubscription_url ()
-    {
-        return subscription_url;
+    public String getContributorsUrl() {
+        return contributorsUrl;
     }
 
-    public void setSubscription_url (String subscription_url)
-    {
-        this.subscription_url = subscription_url;
+    public void setContributorsUrl(String contributorsUrl) {
+        this.contributorsUrl = contributorsUrl;
     }
 
+    public String getCreatedAt() {
+        return createdAt;
+    }
 
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Long getStarsCount() {
+        return starsCount;
+    }
+
+    public void setStarsCount(Long starsCount) {
+        this.starsCount = starsCount;
+    }
+
+    public Long getWatchers() {
+        return watchers;
+    }
+
+    public void setWatchers(Long watchers) {
+        this.watchers = watchers;
+    }
+
+    public Long getForks() {
+        return forks;
+    }
+
+    public void setForks(Long forks) {
+        this.forks = forks;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public static Creator<GithubRepoEntity> getCREATOR() {
+        return CREATOR;
+    }
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
+    }
 }

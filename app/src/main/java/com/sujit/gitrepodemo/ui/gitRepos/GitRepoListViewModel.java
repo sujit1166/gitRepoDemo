@@ -34,10 +34,10 @@ public class GitRepoListViewModel extends ViewModel {
 
     public void loadGithubRepositories() {
         dataSource.getGithubRepositories()
-                .subscribe(repoEntityList -> {
-                    if (repoEntityList != null) {
-                        githubRepoEntityList.addAll(repoEntityList);
-                        getRepositoryListLiveData().postValue(repoEntityList);
+                .subscribe(response -> {
+                    if (response.isSuccessful()) {
+                        githubRepoEntityList.addAll(response.body().getItems());
+                        getRepositoryListLiveData().postValue(githubRepoEntityList);
                     }
                 });
     }

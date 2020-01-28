@@ -8,13 +8,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sujit.gitrepodemo.R;
+import com.sujit.gitrepodemo.data.models.GithubRepoEntity;
+import com.sujit.gitrepodemo.databinding.GitRepoListFragmentBinding;
+
 import javax.inject.Inject;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import dagger.android.support.AndroidSupportInjection;
 
 public class GitRepoListFragment extends Fragment {
@@ -25,6 +31,8 @@ public class GitRepoListFragment extends Fragment {
     private GitRepoListViewModel viewModel;
     private String TAG = getClass().getName();
 
+    GitRepoListFragmentBinding fragmentBinding;
+    GitRepoListAdapter gitRepoListAdapter;
 
     public static GitRepoListFragment newInstance() {
         return new GitRepoListFragment();
@@ -44,7 +52,9 @@ public class GitRepoListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.git_repo_list_fragment, container, false);
+        fragmentBinding = DataBindingUtil.inflate(
+                inflater, R.layout.git_repo_list_fragment, container, false);
+        return fragmentBinding.getRoot();
     }
 
     @Override
@@ -59,16 +69,23 @@ public class GitRepoListFragment extends Fragment {
         initView();
     }
 
-
     private void initView() {
+        fragmentBinding.rvGitrepo.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+        gitRepoListAdapter = new GitRepoListAdapter(getActivity().getApplicationContext());
+        fragmentBinding.rvGitrepo.setAdapter(gitRepoListAdapter);
+        gitRepoListAdapter.setOnItemClickListener(githubRepoEntity -> {
+            Log.e(TAG, "OnItemClickListener: " + githubRepoEntity);
+        });
         viewModel.loadGithubRepositories();
     }
 
 
     private void initViewModel() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(GitRepoListViewModel.class);
-        viewModel.getRepositoryListLiveData().observe(this, repositoriesList -> {
-            Log.e(TAG, "initialiseViewModel: " + repositoriesList.toString());
+        viewModel.getRepositoryListLiveData().observe(this, githubRepoEntityList -> {
+            Log.e(TAG, "initialiseViewModel: " + githubRepoEntityList.toString());
+            gitRepoListAdapter.setItems(githubRepoEntityList);
+            gitRepoListAdapter.notifyDataSetChanged();
         });
     }
 }

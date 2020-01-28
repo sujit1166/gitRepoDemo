@@ -7,6 +7,7 @@ import com.sujit.gitrepodemo.data.models.GitRepoResponse;
 import com.sujit.gitrepodemo.data.models.GithubRepoEntity;
 import com.sujit.gitrepodemo.webservice.APIService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Singleton;
@@ -33,9 +34,7 @@ public class DataSource {
         Log.e(TAG, "DataSource: Constructor");
     }
 
-    public Observable<List<GithubRepoEntity>> getGithubRepositories() {
-        return apiService.getGithubRepositories()
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.computation());
+    public Observable<Response<GitRepoResponse>> getGithubRepositories() {
+        return apiService.getGithubRepositories("android", "stars", 30L, 1L).subscribeOn(Schedulers.io());
     }
 }

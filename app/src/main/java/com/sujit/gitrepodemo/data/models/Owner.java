@@ -3,34 +3,57 @@ package com.sujit.gitrepodemo.data.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Owner implements Parcelable {
-    private String avatar_url;
 
-    private String events_url;
 
-    private String html_url;
+    @SerializedName("login")
+    public String login;
 
-    private String site_admin;
+    @SerializedName("id")
+    public Integer id;
 
+    @SerializedName("node_id")
+    public String nodeId;
+
+    @SerializedName("avatar_url")
+    public String avatarUrl;
+
+    @SerializedName("gravatar_id")
+    public String gravatarId;
+
+    @SerializedName("url")
+    public String url;
+
+    @SerializedName("html_url")
+    public String htmlUrl;
+
+    @SerializedName("repos_url")
+    public String reposUrl;
+
+    @SerializedName("type")
+    public String type;
+
+    @SerializedName("site_admin")
+    public Boolean siteAdmin;
 
     protected Owner(Parcel in) {
-        avatar_url = in.readString();
-        events_url = in.readString();
-        html_url = in.readString();
-        site_admin = in.readString();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(avatar_url);
-        dest.writeString(events_url);
-        dest.writeString(html_url);
-        dest.writeString(site_admin);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
+        login = in.readString();
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readInt();
+        }
+        nodeId = in.readString();
+        avatarUrl = in.readString();
+        gravatarId = in.readString();
+        url = in.readString();
+        htmlUrl = in.readString();
+        reposUrl = in.readString();
+        type = in.readString();
+        byte tmpSiteAdmin = in.readByte();
+        siteAdmin = tmpSiteAdmin == 0 ? null : tmpSiteAdmin == 1;
     }
 
     public static final Creator<Owner> CREATOR = new Creator<Owner>() {
@@ -45,36 +68,111 @@ public class Owner implements Parcelable {
         }
     };
 
-    public String getAvatar_url() {
-        return avatar_url;
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public void setAvatar_url(String avatar_url) {
-        this.avatar_url = avatar_url;
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(login);
+        if (id == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(id);
+        }
+        parcel.writeString(nodeId);
+        parcel.writeString(avatarUrl);
+        parcel.writeString(gravatarId);
+        parcel.writeString(url);
+        parcel.writeString(htmlUrl);
+        parcel.writeString(reposUrl);
+        parcel.writeString(type);
+        parcel.writeByte((byte) (siteAdmin == null ? 0 : siteAdmin ? 1 : 2));
     }
 
-    public String getEvents_url() {
-        return events_url;
+    public String getLogin() {
+        return login;
     }
 
-    public void setEvents_url(String events_url) {
-        this.events_url = events_url;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
-    public String getHtml_url() {
-        return html_url;
+    public Integer getId() {
+        return id;
     }
 
-    public void setHtml_url(String html_url) {
-        this.html_url = html_url;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getSite_admin() {
-        return site_admin;
+    public String getNodeId() {
+        return nodeId;
     }
 
-    public void setSite_admin(String site_admin) {
-        this.site_admin = site_admin;
+    public void setNodeId(String nodeId) {
+        this.nodeId = nodeId;
     }
 
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
+    public String getGravatarId() {
+        return gravatarId;
+    }
+
+    public void setGravatarId(String gravatarId) {
+        this.gravatarId = gravatarId;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getHtmlUrl() {
+        return htmlUrl;
+    }
+
+    public void setHtmlUrl(String htmlUrl) {
+        this.htmlUrl = htmlUrl;
+    }
+
+    public String getReposUrl() {
+        return reposUrl;
+    }
+
+    public void setReposUrl(String reposUrl) {
+        this.reposUrl = reposUrl;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Boolean getSiteAdmin() {
+        return siteAdmin;
+    }
+
+    public void setSiteAdmin(Boolean siteAdmin) {
+        this.siteAdmin = siteAdmin;
+    }
+
+    public static Creator<Owner> getCREATOR() {
+        return CREATOR;
+    }
 }
