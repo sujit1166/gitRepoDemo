@@ -5,10 +5,10 @@ import com.sujit.gitrepodemo.data.models.GithubRepoEntity;
 
 import java.util.List;
 
-import retrofit2.Call;
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 
-public interface  APIService {
+public interface APIService {
     @GET("repositories")
-    Call<List<GithubRepoEntity>> getRepos();
+    Observable<List<GithubRepoEntity>> getGithubRepositories();
 }

@@ -8,19 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sujit.gitrepodemo.R;
-
-import java.util.List;
-
 import javax.inject.Inject;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
-import dagger.android.AndroidInjection;
 import dagger.android.support.AndroidSupportInjection;
 
 public class GitRepoListFragment extends Fragment {
@@ -28,8 +22,8 @@ public class GitRepoListFragment extends Fragment {
     @Inject
     ViewModelProvider.Factory viewModelFactory;
 
-    private GitRepoListViewModel mViewModel;
-    private String TAG=getClass().getName();
+    private GitRepoListViewModel viewModel;
+    private String TAG = getClass().getName();
 
 
     public static GitRepoListFragment newInstance() {
@@ -37,7 +31,6 @@ public class GitRepoListFragment extends Fragment {
     }
 
     public GitRepoListFragment() {
-
     }
 
     @Override
@@ -55,9 +48,27 @@ public class GitRepoListFragment extends Fragment {
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.e(TAG, "onActivityCreated: "+viewModelFactory );
-        mViewModel = ViewModelProviders.of(this, viewModelFactory).get(GitRepoListViewModel.class);
+        initViewModel();
+        initView();
+    }
+
+
+    private void initView() {
+        viewModel.loadGithubRepositories();
+    }
+
+
+    private void initViewModel() {
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(GitRepoListViewModel.class);
+        viewModel.getRepositoryListLiveData().observe(this, repositoriesList -> {
+            Log.e(TAG, "initialiseViewModel: " + repositoriesList.toString());
+        });
     }
 }
