@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.sujit.gitrepodemo.R;
 import com.sujit.gitrepodemo.data.models.GithubRepoEntity;
 import com.sujit.gitrepodemo.databinding.GitRepoListFragmentBinding;
+import com.sujit.gitrepodemo.ui.RecyclerViewScrollListener;
 
 import javax.inject.Inject;
 
@@ -33,6 +34,7 @@ public class GitRepoListFragment extends Fragment {
 
     GitRepoListFragmentBinding fragmentBinding;
     GitRepoListAdapter gitRepoListAdapter;
+
 
     public static GitRepoListFragment newInstance() {
         return new GitRepoListFragment();
@@ -75,6 +77,18 @@ public class GitRepoListFragment extends Fragment {
         fragmentBinding.rvGitrepo.setAdapter(gitRepoListAdapter);
         gitRepoListAdapter.setOnItemClickListener(githubRepoEntity -> {
             Log.e(TAG, "OnItemClickListener: " + githubRepoEntity);
+        });
+
+        fragmentBinding.rvGitrepo.addOnScrollListener(new RecyclerViewScrollListener(fragmentBinding.rvGitrepo) {
+            @Override
+            public boolean isLastPage() {
+                return viewModel.isLastPage();
+            }
+
+            @Override
+            public void loadMore() {
+                viewModel.loadGithubRepositories();
+            }
         });
         viewModel.loadGithubRepositories();
     }

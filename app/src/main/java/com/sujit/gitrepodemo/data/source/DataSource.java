@@ -34,7 +34,7 @@ public class DataSource {
         Log.e(TAG, "DataSource: Constructor");
     }
 
-    public Observable<Response<GitRepoResponse>> getGithubRepositories() {
-        return apiService.getGithubRepositories("android", "stars", 30L, 1L).subscribeOn(Schedulers.io());
+    public Observable<Response<GitRepoResponse>> getGithubRepositories(Long pageNumber) {
+        return apiService.getGithubRepositories("android", "stars", 30L, pageNumber).subscribeOn(Schedulers.io());
     }
 }

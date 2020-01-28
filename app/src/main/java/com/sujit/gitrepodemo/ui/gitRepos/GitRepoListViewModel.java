@@ -22,6 +22,8 @@ public class GitRepoListViewModel extends ViewModel {
     private List<GithubRepoEntity> githubRepoEntityList;
     private MutableLiveData<List<GithubRepoEntity>> githubRepoEntityLiveData;
     private DataSource dataSource;
+    private Long currentPageNumber;
+    private Long totalPages;
 
     @Inject
     public GitRepoListViewModel(APIService apiService) {
@@ -29,13 +31,15 @@ public class GitRepoListViewModel extends ViewModel {
         githubRepoEntityList = new ArrayList<>();
         githubRepoEntityLiveData = new MutableLiveData<>();
         dataSource = new DataSource(apiService);
-
+        currentPageNumber = 0L;
+        totalPages = 0L;
     }
 
     public void loadGithubRepositories() {
-        dataSource.getGithubRepositories()
+        dataSource.getGithubRepositories(++currentPageNumber)
                 .subscribe(response -> {
                     if (response.isSuccessful()) {
+                        totalPages = response.body().getTotalCount();
                         githubRepoEntityList.addAll(response.body().getItems());
                         getRepositoryListLiveData().postValue(githubRepoEntityList);
                     }
@@ -49,5 +53,10 @@ public class GitRepoListViewModel extends ViewModel {
 
     public MutableLiveData<List<GithubRepoEntity>> getRepositoryListLiveData() {
         return githubRepoEntityLiveData;
+    }
+
+
+    public boolean isLastPage() {
+        return currentPageNumber >= totalPages;
     }
 }
