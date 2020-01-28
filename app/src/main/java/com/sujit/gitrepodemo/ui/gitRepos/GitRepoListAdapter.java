@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.picasso.Picasso;
 import com.sujit.gitrepodemo.R;
 import com.sujit.gitrepodemo.data.models.GithubRepoEntity;
 import com.sujit.gitrepodemo.databinding.GitRepoItemBinding;
@@ -75,6 +76,10 @@ public class GitRepoListAdapter extends RecyclerView.Adapter<GitRepoListAdapter.
         }
 
         public void bind(GithubRepoEntity gitRepo) {
+
+            Picasso.get().load(gitRepo.getOwner().getAvatarUrl())
+                    .placeholder(R.drawable.ic_launcher_background)
+                    .into(binding.ivProfile);
 
             binding.tvRepoName.setText(gitRepo.getFullName());
             binding.tvDescription.setText(gitRepo.getDescription());
