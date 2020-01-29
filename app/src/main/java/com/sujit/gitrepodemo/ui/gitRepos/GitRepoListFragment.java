@@ -1,6 +1,7 @@
 package com.sujit.gitrepodemo.ui.gitRepos;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,8 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sujit.gitrepodemo.R;
+import com.sujit.gitrepodemo.data.local.entity.GitRepoEntity;
 import com.sujit.gitrepodemo.databinding.GitRepoListFragmentBinding;
 import com.sujit.gitrepodemo.ui.RecyclerViewScrollListener;
+import com.sujit.gitrepodemo.ui.gitRepoDetails.GitRepoDetailsActivity;
 
 import javax.inject.Inject;
 
@@ -22,6 +25,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import dagger.android.support.AndroidSupportInjection;
+
+import static com.sujit.gitrepodemo.AppConstants.GITREPOENTITY_INTENT;
 
 public class GitRepoListFragment extends Fragment {
 
@@ -74,9 +79,7 @@ public class GitRepoListFragment extends Fragment {
         fragmentBinding.rvGitrepo.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         gitRepoListAdapter = new GitRepoListAdapter(getActivity().getApplicationContext());
         fragmentBinding.rvGitrepo.setAdapter(gitRepoListAdapter);
-        gitRepoListAdapter.setOnItemClickListener(githubRepoEntity -> {
-            Log.e(TAG, "OnItemClickListener: " + githubRepoEntity);
-        });
+        gitRepoListAdapter.setOnItemClickListener(this::navigateToGitRepoDetailsActivity);
 
         fragmentBinding.rvGitrepo.addOnScrollListener(new RecyclerViewScrollListener(fragmentBinding.rvGitrepo) {
             @Override
@@ -86,7 +89,6 @@ public class GitRepoListFragment extends Fragment {
 
             @Override
             public void loadMore() {
-                loadMore();
                 viewModel.loadGitRepositories();
             }
         });
@@ -101,5 +103,11 @@ public class GitRepoListFragment extends Fragment {
             gitRepoListAdapter.setItems(githubRepoEntityList);
             gitRepoListAdapter.notifyDataSetChanged();
         });
+    }
+
+    public void navigateToGitRepoDetailsActivity(GitRepoEntity gitRepoEntity) {
+        Intent intent = new Intent(getActivity(), GitRepoDetailsActivity.class);
+        intent.putExtra(GITREPOENTITY_INTENT, gitRepoEntity);
+        getActivity().startActivity(intent);
     }
 }

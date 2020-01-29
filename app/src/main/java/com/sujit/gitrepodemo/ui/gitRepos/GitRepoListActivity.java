@@ -31,6 +31,7 @@ public class GitRepoListActivity extends AppCompatActivity implements HasSupport
         }
     }
 
+    
     @Override
     public AndroidInjector<Fragment> supportFragmentInjector() {
         return supportFragmentInjector;

@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import com.squareup.picasso.Picasso;
 import com.sujit.gitrepodemo.R;
+import com.sujit.gitrepodemo.Utils;
 import com.sujit.gitrepodemo.data.local.entity.GitRepoEntity;
 import com.sujit.gitrepodemo.databinding.GitRepoItemBinding;
 
@@ -80,6 +81,7 @@ public class GitRepoListAdapter extends RecyclerView.Adapter<GitRepoListAdapter.
                     .into(binding.ivProfile);
 
             binding.tvRepoName.setText(gitRepo.getFullName());
+            binding.tvRepoCreatedDate.setText(Utils.getDiaplayDate(gitRepo.getCreatedAt()));
             binding.tvDescription.setText(gitRepo.getDescription());
             binding.tvLanguage.setText(gitRepo.getLanguage());
             binding.tvStarsCount.setText(String.valueOf(gitRepo.getStarsCount()));

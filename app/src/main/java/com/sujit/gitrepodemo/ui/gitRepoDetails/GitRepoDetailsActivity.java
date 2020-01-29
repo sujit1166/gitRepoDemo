@@ -9,12 +9,13 @@ import dagger.android.support.HasSupportFragmentInjector;
 
 import android.os.Bundle;
 
+import com.sujit.gitrepodemo.AppConstants;
 import com.sujit.gitrepodemo.R;
+import com.sujit.gitrepodemo.data.local.entity.GitRepoEntity;
 
 import javax.inject.Inject;
 
 public class GitRepoDetailsActivity extends AppCompatActivity implements HasSupportFragmentInjector {
-
 
 
     @Inject
@@ -27,7 +28,7 @@ public class GitRepoDetailsActivity extends AppCompatActivity implements HasSupp
         AndroidInjection.inject(this);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, GitRepoDetailsFragment.newInstance())
+                    .replace(R.id.container, GitRepoDetailsFragment.newInstance(getIntent().getParcelableExtra(AppConstants.GITREPOENTITY_INTENT)))
                     .commitNow();
         }
     }

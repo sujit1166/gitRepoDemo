@@ -47,7 +47,7 @@ public class GitRepoListViewModel extends ViewModel {
     }
 
 
-    public List<GitRepoEntity> getGitRepositoriesList() {
+    public List<GitRepoEntity> getGitRepoList() {
         return gitRepoEntityList;
     }
 
@@ -57,6 +57,8 @@ public class GitRepoListViewModel extends ViewModel {
 
 
     public boolean isLastPage() {
-        return false;
+        GitRepoEntity gitRepoEntity = getGitRepoListLiveData().getValue() != null && !getGitRepoListLiveData().getValue().isEmpty() ? getGitRepoListLiveData().getValue().get(0) : null;
+
+        return gitRepoEntity != null && gitRepoEntity.getTotalPages() <= currentPageNumber;
     }
 }
