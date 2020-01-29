@@ -11,9 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_large_14"
         android:layout_marginTop="@dimen/margin_large_14"
-        android:background="@android:color/white"
+        android:background="@color/white"
         android:elevation="@dimen/card_view_elevation"
-        app:cardBackgroundColor="@android:color/white"
+        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/card_view_corner_radius"
         app:cardElevation="@dimen/card_view_elevation">
 
@@ -27,11 +27,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/ivProfile"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/ic_launcher_background" />
+                    android:layout_gravity="center_horizontal"
+                    android:src="@mipmap/ic_launcher"
+                    app:civ_border_color="@color/colorAccent"
+                    app:civ_border_width="1dp" />
 
                 <TextView
                     android:id="@+id/tvRepoName"
@@ -40,6 +43,7 @@
                     android:layout_toRightOf="@+id/ivProfile"
                     android:ellipsize="end"
                     android:maxLines="1"
+                    android:textColor="@color/black"
                     android:paddingLeft="@dimen/padding_small_10"
                     android:text="sujit1166/testRepo"
                     android:textSize="@dimen/font_xlarge_16"
@@ -66,7 +70,7 @@
                 android:maxLines="3"
                 android:paddingTop="@dimen/padding_xlarge_16"
                 android:text="This is test description"
-                android:textSize="@dimen/font_medium_12" />
+                android:textSize="@dimen/font_large_14" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -98,7 +102,7 @@
                         android:gravity="center_vertical"
                         android:paddingLeft="5dp"
                         android:text="Android"
-                        android:textSize="@dimen/font_medium_12" />
+                        android:textSize="@dimen/font_large_14" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -122,7 +126,7 @@
                         android:ellipsize="end"
                         android:paddingLeft="5dp"
                         android:text="30000 stars"
-                        android:textSize="@dimen/font_medium_12" />
+                        android:textSize="@dimen/font_large_14" />
                 </RelativeLayout>
             </LinearLayout>
         </RelativeLayout>

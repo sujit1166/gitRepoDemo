@@ -35,7 +35,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:maxEms="15"
-                android:text="@string/git_repositories" />
+                android:text="@string/git_repositories"
+                android:textColor="@color/white" />
         </androidx.appcompat.widget.Toolbar>
 
         <androidx.recyclerview.widget.RecyclerView
