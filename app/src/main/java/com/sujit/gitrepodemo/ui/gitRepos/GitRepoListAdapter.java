@@ -84,7 +84,7 @@ public class GitRepoListAdapter extends RecyclerView.Adapter<GitRepoListAdapter.
             binding.tvRepoCreatedDate.setText(Utils.getDiaplayDate(gitRepo.getCreatedAt()));
             binding.tvDescription.setText(gitRepo.getDescription());
             binding.tvLanguage.setText(gitRepo.getLanguage());
-            binding.tvStarsCount.setText(String.valueOf(gitRepo.getStarsCount()));
+            binding.tvStarsCount.setText(String.format(context.getString(R.string.star_counter),String.valueOf(gitRepo.getStarsCount())));
             binding.cvRepo.setOnClickListener(view -> {
                 if (onItemClickListener != null) {
                     onItemClickListener.onItemClickListener(gitRepo);

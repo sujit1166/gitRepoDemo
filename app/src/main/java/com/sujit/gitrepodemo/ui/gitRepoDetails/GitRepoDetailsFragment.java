@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ShareCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -17,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.picasso.Picasso;
 import com.sujit.gitrepodemo.AppConstants;
 import com.sujit.gitrepodemo.R;
 import com.sujit.gitrepodemo.data.local.entity.GitRepoEntity;
@@ -67,6 +69,7 @@ public class GitRepoDetailsFragment extends Fragment {
         return fragmentBinding.getRoot();
     }
 
+
     @Override
     public void onAttach(@NonNull Context context) {
         AndroidSupportInjection.inject(this);
@@ -77,6 +80,35 @@ public class GitRepoDetailsFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this, viewModelFactory).get(GitRepoDetailsViewModel.class);
+//        mViewModel = ViewModelProviders.of(this, viewModelFactory).get(GitRepoDetailsViewModel.class);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initView();
+    }
+
+    private void initView() {
+
+        Picasso.get().load(gitRepoEntity.getOwner().getAvatarUrl())
+                .placeholder(R.drawable.ic_launcher_background)
+                .into(fragmentBinding.ivProfile);
+
+        fragmentBinding.tvRepoName.setText(gitRepoEntity.getFullName());
+        fragmentBinding.tvLanguage.setText(gitRepoEntity.getLanguage());
+        fragmentBinding.tvStarsCount.setText(String.valueOf(gitRepoEntity.getStarsCount()));
+        fragmentBinding.tvWatchersCount.setText(String.valueOf(gitRepoEntity.getWatchers()));
+        fragmentBinding.tvForkCount.setText(String.valueOf(gitRepoEntity.getForks()));
+        fragmentBinding.tvDescription.setText(String.valueOf(gitRepoEntity.getDescription()));
+
+        fragmentBinding.btnShare.setOnClickListener(v -> {
+            ShareCompat.IntentBuilder
+                    .from(getActivity())
+                    .setType("text/plain")
+                    .setChooserTitle(getContext().getString(R.string.share_repo_url))
+                    .setText(gitRepoEntity.getHtmlUrl())
+                    .startChooser();
+        });
     }
 }

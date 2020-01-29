@@ -21,6 +21,7 @@
     <dimen name="padding_xxxxxlarge_30">30dp</dimen>
 
 
+    <dimen name="margin_xsmall_8">8dp</dimen>
     <dimen name="margin_small_10">10dp</dimen>
     <dimen name="margin_medium_12">12dp</dimen>
     <dimen name="margin_large_14">14dp</dimen>
