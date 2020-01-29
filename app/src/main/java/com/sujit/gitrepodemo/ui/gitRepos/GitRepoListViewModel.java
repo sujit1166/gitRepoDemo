@@ -2,16 +2,16 @@ package com.sujit.gitrepodemo.ui.gitRepos;
 
 import android.util.Log;
 
-import com.sujit.gitrepodemo.data.models.GithubRepoEntity;
+import com.sujit.gitrepodemo.data.local.dao.GitRepoDao;
+import com.sujit.gitrepodemo.data.local.entity.GitRepoEntity;
 import com.sujit.gitrepodemo.data.source.DataSource;
-import com.sujit.gitrepodemo.webservice.APIService;
+import com.sujit.gitrepodemo.data.remote.APIService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -19,44 +19,44 @@ public class GitRepoListViewModel extends ViewModel {
 
     private final String TAG = getClass().getSimpleName();
 
-    private List<GithubRepoEntity> githubRepoEntityList;
-    private MutableLiveData<List<GithubRepoEntity>> githubRepoEntityLiveData;
+    private List<GitRepoEntity> gitRepoEntityList;
+    private MutableLiveData<List<GitRepoEntity>> gitRepoEntityLiveData;
     private DataSource dataSource;
     private Long currentPageNumber;
     private Long totalPages;
 
     @Inject
-    public GitRepoListViewModel(APIService apiService) {
+    public GitRepoListViewModel(APIService apiService, GitRepoDao gitRepoDao) {
         Log.e(TAG, "GitRepoListViewModel: " + apiService.hashCode());
-        githubRepoEntityList = new ArrayList<>();
-        githubRepoEntityLiveData = new MutableLiveData<>();
-        dataSource = new DataSource(apiService);
+        gitRepoEntityList = new ArrayList<>();
+        gitRepoEntityLiveData = new MutableLiveData<>();
+        dataSource = new DataSource(apiService, gitRepoDao);
         currentPageNumber = 0L;
         totalPages = 0L;
     }
 
-    public void loadGithubRepositories() {
-        dataSource.getGithubRepositories(++currentPageNumber)
-                .subscribe(response -> {
-                    if (response.isSuccessful()) {
-                        totalPages = response.body().getTotalCount();
-                        githubRepoEntityList.addAll(response.body().getItems());
-                        getRepositoryListLiveData().postValue(githubRepoEntityList);
+    public void loadGitRepositories() {
+        Log.e(TAG, "loadGitRepositories: ");
+        dataSource.getGitRepositories(++currentPageNumber)
+                .subscribe(resource -> {
+                    if (resource.isLoaded()) {
+                        gitRepoEntityList.addAll(resource.data);
+                        getGitRepoListLiveData().postValue(gitRepoEntityList);
                     }
                 });
     }
 
 
-    public List<GithubRepoEntity> getGithubRepositoriesList() {
-        return githubRepoEntityList;
+    public List<GitRepoEntity> getGitRepositoriesList() {
+        return gitRepoEntityList;
     }
 
-    public MutableLiveData<List<GithubRepoEntity>> getRepositoryListLiveData() {
-        return githubRepoEntityLiveData;
+    public MutableLiveData<List<GitRepoEntity>> getGitRepoListLiveData() {
+        return gitRepoEntityLiveData;
     }
 
 
     public boolean isLastPage() {
-        return currentPageNumber >= totalPages;
+        return false;
     }
 }

@@ -2,12 +2,12 @@ package com.sujit.gitrepodemo.di.component;
 
 import android.app.Application;
 
-import com.sujit.gitrepodemo.MyGitHubApplication;
+import com.sujit.gitrepodemo.GitRepoApplication;
 import com.sujit.gitrepodemo.di.module.ActivityModule;
 import com.sujit.gitrepodemo.di.module.ApiModule;
+import com.sujit.gitrepodemo.di.module.DataBaseModule;
 import com.sujit.gitrepodemo.di.module.FragmentModule;
 import com.sujit.gitrepodemo.di.module.ViewModelModule;
-import com.sujit.gitrepodemo.webservice.APIService;
 
 import javax.inject.Singleton;
 
@@ -21,6 +21,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
         ViewModelModule.class,
         FragmentModule.class,
         ActivityModule.class,
+        DataBaseModule.class,
         AndroidSupportInjectionModule.class})
 @Singleton
 public interface AppComponent {
@@ -35,5 +36,5 @@ public interface AppComponent {
 
     }
 
-    void inject(MyGitHubApplication myGitHubApplication);
+    void inject(GitRepoApplication gitRepoApplication);
 }

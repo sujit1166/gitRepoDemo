@@ -3,6 +3,7 @@ package com.sujit.gitrepodemo;
 import android.app.Activity;
 import android.app.Application;
 
+
 import com.sujit.gitrepodemo.di.component.DaggerAppComponent;
 
 import javax.inject.Inject;
@@ -14,7 +15,7 @@ import dagger.android.HasActivityInjector;
 import dagger.android.HasFragmentInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 
-public class MyGitHubApplication extends Application implements HasActivityInjector, HasFragmentInjector, HasSupportFragmentInjector {
+public class GitRepoApplication extends Application implements HasActivityInjector, HasFragmentInjector, HasSupportFragmentInjector {
 
     @Inject
     DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;

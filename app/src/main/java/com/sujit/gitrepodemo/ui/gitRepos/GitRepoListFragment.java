@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sujit.gitrepodemo.R;
-import com.sujit.gitrepodemo.data.models.GithubRepoEntity;
 import com.sujit.gitrepodemo.databinding.GitRepoListFragmentBinding;
 import com.sujit.gitrepodemo.ui.RecyclerViewScrollListener;
 
@@ -87,16 +86,17 @@ public class GitRepoListFragment extends Fragment {
 
             @Override
             public void loadMore() {
-                viewModel.loadGithubRepositories();
+                loadMore();
+                viewModel.loadGitRepositories();
             }
         });
-        viewModel.loadGithubRepositories();
+        viewModel.loadGitRepositories();
     }
 
 
     private void initViewModel() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(GitRepoListViewModel.class);
-        viewModel.getRepositoryListLiveData().observe(this, githubRepoEntityList -> {
+        viewModel.getGitRepoListLiveData().observe(this, githubRepoEntityList -> {
             Log.e(TAG, "initialiseViewModel: " + githubRepoEntityList.toString());
             gitRepoListAdapter.setItems(githubRepoEntityList);
             gitRepoListAdapter.notifyDataSetChanged();

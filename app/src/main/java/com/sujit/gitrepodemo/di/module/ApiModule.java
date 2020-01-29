@@ -4,7 +4,7 @@ package com.sujit.gitrepodemo.di.module;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import com.sujit.gitrepodemo.webservice.APIService;
+import com.sujit.gitrepodemo.data.remote.APIService;
 
 import java.util.concurrent.TimeUnit;
 

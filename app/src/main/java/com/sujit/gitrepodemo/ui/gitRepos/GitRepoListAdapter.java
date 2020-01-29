@@ -1,14 +1,12 @@
 package com.sujit.gitrepodemo.ui.gitRepos;
 
 import android.content.Context;
-import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.squareup.picasso.Picasso;
 import com.sujit.gitrepodemo.R;
-import com.sujit.gitrepodemo.data.models.GithubRepoEntity;
+import com.sujit.gitrepodemo.data.local.entity.GitRepoEntity;
 import com.sujit.gitrepodemo.databinding.GitRepoItemBinding;
 
 import java.util.ArrayList;
@@ -20,17 +18,17 @@ import androidx.recyclerview.widget.RecyclerView;
 public class GitRepoListAdapter extends RecyclerView.Adapter<GitRepoListAdapter.RepoViewHolder> {
 
     private Context context;
-    private List<GithubRepoEntity> githubRepoEntityList;
+    private List<GitRepoEntity> gitRepoEntityList;
 
     public interface OnItemClickListener {
-        void onItemClickListener(GithubRepoEntity githubRepoEntity);
+        void onItemClickListener(GitRepoEntity gitRepoEntity);
     }
 
     private OnItemClickListener onItemClickListener;
 
     public GitRepoListAdapter(Context context) {
         this.context = context;
-        this.githubRepoEntityList = new ArrayList<>();
+        this.gitRepoEntityList = new ArrayList<>();
     }
 
 
@@ -47,8 +45,8 @@ public class GitRepoListAdapter extends RecyclerView.Adapter<GitRepoListAdapter.
         holder.bind(getItem(position));
     }
 
-    public void setItems(List<GithubRepoEntity> entities) {
-        this.githubRepoEntityList.addAll(entities);
+    public void setItems(List<GitRepoEntity> entities) {
+        this.gitRepoEntityList.addAll(entities);
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -57,12 +55,12 @@ public class GitRepoListAdapter extends RecyclerView.Adapter<GitRepoListAdapter.
 
     @Override
     public int getItemCount() {
-        return githubRepoEntityList == null ? 0 : githubRepoEntityList.size();
+        return gitRepoEntityList == null ? 0 : gitRepoEntityList.size();
     }
 
 
-    public GithubRepoEntity getItem(int position) {
-        return githubRepoEntityList.get(position);
+    public GitRepoEntity getItem(int position) {
+        return gitRepoEntityList.get(position);
     }
 
 
@@ -75,7 +73,7 @@ public class GitRepoListAdapter extends RecyclerView.Adapter<GitRepoListAdapter.
             this.binding = binding;
         }
 
-        public void bind(GithubRepoEntity gitRepo) {
+        public void bind(GitRepoEntity gitRepo) {
 
             Picasso.get().load(gitRepo.getOwner().getAvatarUrl())
                     .placeholder(R.drawable.ic_launcher_background)

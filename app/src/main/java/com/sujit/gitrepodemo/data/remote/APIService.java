@@ -1,10 +1,7 @@
-package com.sujit.gitrepodemo.webservice;
+package com.sujit.gitrepodemo.data.remote;
 
 
 import com.sujit.gitrepodemo.data.models.GitRepoResponse;
-import com.sujit.gitrepodemo.data.models.GithubRepoEntity;
-
-import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.Response;

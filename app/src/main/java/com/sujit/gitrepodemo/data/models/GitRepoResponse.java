@@ -4,12 +4,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
+import com.sujit.gitrepodemo.data.local.entity.GitRepoEntity;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 public class GitRepoResponse<T> implements Parcelable {
 
@@ -19,7 +17,7 @@ public class GitRepoResponse<T> implements Parcelable {
     @SerializedName("incomplete_results")
     private Boolean incomplete_results;
 
-    private List<GithubRepoEntity> items;
+    private List<GitRepoEntity> items;
 
     public GitRepoResponse() {
         this.items = new ArrayList<>();
@@ -33,7 +31,7 @@ public class GitRepoResponse<T> implements Parcelable {
         }
         byte tmpIncomplete_results = in.readByte();
         incomplete_results = tmpIncomplete_results == 0 ? null : tmpIncomplete_results == 1;
-        items = in.createTypedArrayList(GithubRepoEntity.CREATOR);
+        items = in.createTypedArrayList(GitRepoEntity.CREATOR);
     }
 
     @Override
@@ -82,11 +80,11 @@ public class GitRepoResponse<T> implements Parcelable {
         this.incomplete_results = incomplete_results;
     }
 
-    public List<GithubRepoEntity> getItems() {
+    public List<GitRepoEntity> getItems() {
         return items;
     }
 
-    public void setItems(List<GithubRepoEntity> items) {
+    public void setItems(List<GitRepoEntity> items) {
         this.items = items;
     }
 

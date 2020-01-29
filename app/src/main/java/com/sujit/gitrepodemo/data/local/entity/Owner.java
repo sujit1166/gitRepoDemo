@@ -1,18 +1,23 @@
-package com.sujit.gitrepodemo.data.models;
+package com.sujit.gitrepodemo.data.local.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+
+@Entity
 public class Owner implements Parcelable {
 
 
     @SerializedName("login")
     public String login;
 
+    @ColumnInfo(name = "owner_id")
     @SerializedName("id")
-    public Integer id;
+    public Long id;
 
     @SerializedName("node_id")
     public String nodeId;
@@ -25,9 +30,6 @@ public class Owner implements Parcelable {
 
     @SerializedName("url")
     public String url;
-
-    @SerializedName("html_url")
-    public String htmlUrl;
 
     @SerializedName("repos_url")
     public String reposUrl;
@@ -43,17 +45,39 @@ public class Owner implements Parcelable {
         if (in.readByte() == 0) {
             id = null;
         } else {
-            id = in.readInt();
+            id = in.readLong();
         }
         nodeId = in.readString();
         avatarUrl = in.readString();
         gravatarId = in.readString();
         url = in.readString();
-        htmlUrl = in.readString();
         reposUrl = in.readString();
         type = in.readString();
         byte tmpSiteAdmin = in.readByte();
         siteAdmin = tmpSiteAdmin == 0 ? null : tmpSiteAdmin == 1;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(login);
+        if (id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(id);
+        }
+        dest.writeString(nodeId);
+        dest.writeString(avatarUrl);
+        dest.writeString(gravatarId);
+        dest.writeString(url);
+        dest.writeString(reposUrl);
+        dest.writeString(type);
+        dest.writeByte((byte) (siteAdmin == null ? 0 : siteAdmin ? 1 : 2));
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<Owner> CREATOR = new Creator<Owner>() {
@@ -68,30 +92,6 @@ public class Owner implements Parcelable {
         }
     };
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(login);
-        if (id == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(id);
-        }
-        parcel.writeString(nodeId);
-        parcel.writeString(avatarUrl);
-        parcel.writeString(gravatarId);
-        parcel.writeString(url);
-        parcel.writeString(htmlUrl);
-        parcel.writeString(reposUrl);
-        parcel.writeString(type);
-        parcel.writeByte((byte) (siteAdmin == null ? 0 : siteAdmin ? 1 : 2));
-    }
-
     public String getLogin() {
         return login;
     }
@@ -100,11 +100,11 @@ public class Owner implements Parcelable {
         this.login = login;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -140,14 +140,6 @@ public class Owner implements Parcelable {
         this.url = url;
     }
 
-    public String getHtmlUrl() {
-        return htmlUrl;
-    }
-
-    public void setHtmlUrl(String htmlUrl) {
-        this.htmlUrl = htmlUrl;
-    }
-
     public String getReposUrl() {
         return reposUrl;
     }
@@ -174,5 +166,8 @@ public class Owner implements Parcelable {
 
     public static Creator<Owner> getCREATOR() {
         return CREATOR;
+    }
+
+    public Owner() {
     }
 }

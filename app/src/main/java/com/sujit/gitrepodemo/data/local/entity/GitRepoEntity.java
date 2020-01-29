@@ -1,15 +1,23 @@
-package com.sujit.gitrepodemo.data.models;
+package com.sujit.gitrepodemo.data.local.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
+import com.sujit.gitrepodemo.data.local.converter.TimestampConverter;
 
-public class GithubRepoEntity implements Parcelable {
+import androidx.annotation.NonNull;
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
+@Entity
+public class GitRepoEntity implements Parcelable {
+
+    @NonNull
+    @PrimaryKey
     private Long id;
-
-    private Long page;
 
     private Long totalPages;
 
@@ -18,6 +26,7 @@ public class GithubRepoEntity implements Parcelable {
     @SerializedName("full_name")
     private String fullName;
 
+    @Embedded
     private Owner owner;
 
     @SerializedName("html_url")
@@ -28,6 +37,7 @@ public class GithubRepoEntity implements Parcelable {
     @SerializedName("contributors_url")
     private String contributorsUrl;
 
+    @TypeConverters(TimestampConverter.class)
     @SerializedName("created_at")
     private String createdAt;
 
@@ -38,18 +48,14 @@ public class GithubRepoEntity implements Parcelable {
     private Long forks;
     private String language;
     private String score;
+    private Long pageNumber;
 
 
-    protected GithubRepoEntity(Parcel in) {
+    protected GitRepoEntity(Parcel in) {
         if (in.readByte() == 0) {
             id = null;
         } else {
             id = in.readLong();
-        }
-        if (in.readByte() == 0) {
-            page = null;
-        } else {
-            page = in.readLong();
         }
         if (in.readByte() == 0) {
             totalPages = null;
@@ -80,6 +86,11 @@ public class GithubRepoEntity implements Parcelable {
         }
         language = in.readString();
         score = in.readString();
+        if (in.readByte() == 0) {
+            pageNumber = null;
+        } else {
+            pageNumber = in.readLong();
+        }
     }
 
     @Override
@@ -89,12 +100,6 @@ public class GithubRepoEntity implements Parcelable {
         } else {
             dest.writeByte((byte) 1);
             dest.writeLong(id);
-        }
-        if (page == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeLong(page);
         }
         if (totalPages == null) {
             dest.writeByte((byte) 0);
@@ -129,6 +134,12 @@ public class GithubRepoEntity implements Parcelable {
         }
         dest.writeString(language);
         dest.writeString(score);
+        if (pageNumber == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(pageNumber);
+        }
     }
 
     @Override
@@ -136,15 +147,15 @@ public class GithubRepoEntity implements Parcelable {
         return 0;
     }
 
-    public static final Creator<GithubRepoEntity> CREATOR = new Creator<GithubRepoEntity>() {
+    public static final Creator<GitRepoEntity> CREATOR = new Creator<GitRepoEntity>() {
         @Override
-        public GithubRepoEntity createFromParcel(Parcel in) {
-            return new GithubRepoEntity(in);
+        public GitRepoEntity createFromParcel(Parcel in) {
+            return new GitRepoEntity(in);
         }
 
         @Override
-        public GithubRepoEntity[] newArray(int size) {
-            return new GithubRepoEntity[size];
+        public GitRepoEntity[] newArray(int size) {
+            return new GitRepoEntity[size];
         }
     };
 
@@ -156,12 +167,12 @@ public class GithubRepoEntity implements Parcelable {
         this.id = id;
     }
 
-    public Long getPage() {
-        return page;
+    public Long getPageNumber() {
+        return pageNumber;
     }
 
-    public void setPage(Long page) {
-        this.page = page;
+    public void setPageNumber(Long pageNumber) {
+        this.pageNumber = pageNumber;
     }
 
     public Long getTotalPages() {
@@ -260,7 +271,7 @@ public class GithubRepoEntity implements Parcelable {
         this.language = language;
     }
 
-    public static Creator<GithubRepoEntity> getCREATOR() {
+    public static Creator<GitRepoEntity> getCREATOR() {
         return CREATOR;
     }
 
@@ -270,5 +281,9 @@ public class GithubRepoEntity implements Parcelable {
 
     public void setScore(String score) {
         this.score = score;
+    }
+
+
+    public GitRepoEntity() {
     }
 }
