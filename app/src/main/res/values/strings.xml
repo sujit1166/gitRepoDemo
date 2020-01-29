@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Git Repo Demo</string>
+    <string name="app_name">GithubDemo</string>
     <string name="git_repositories">Github Repositories</string>
     <string name="share">Share</string>
     <string name="stars">stars</string>
@@ -7,5 +7,6 @@
     <string name="forks">forks</string>
     <string name="star_counter" formatted="false">%s stars</string>
     <string name="share_repo_url">SHARE REPO URL</string>
+    <string name="no_data_found">No data found</string>
 
 </resources>

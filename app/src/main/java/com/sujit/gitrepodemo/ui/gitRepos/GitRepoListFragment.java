@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.sujit.gitrepodemo.R;
 import com.sujit.gitrepodemo.data.local.entity.GitRepoEntity;
@@ -92,17 +93,48 @@ public class GitRepoListFragment extends Fragment {
                 viewModel.loadGitRepositories();
             }
         });
-        viewModel.loadGitRepositories();
+
+
+        if (viewModel.getGitRepoList().isEmpty()) {
+            hideList();
+            showProgress();
+            viewModel.loadGitRepositories();
+        } else {
+            hideProgress();
+            showList();
+        }
     }
 
 
     private void initViewModel() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(GitRepoListViewModel.class);
         viewModel.getGitRepoListLiveData().observe(this, githubRepoEntityList -> {
-            Log.e(TAG, "initialiseViewModel: " + githubRepoEntityList.toString());
-            gitRepoListAdapter.setItems(githubRepoEntityList);
-            gitRepoListAdapter.notifyDataSetChanged();
+//            Log.e(TAG, "initialiseViewModel: " + githubRepoEntityList.toString());
+            if (!viewModel.getGitRepoList().isEmpty()) {
+                hideProgress();
+                showList();
+                gitRepoListAdapter.setItems(githubRepoEntityList);
+                gitRepoListAdapter.notifyDataSetChanged();
+            } else {
+                Toast.makeText(getActivity(), getActivity().getString(R.string.no_data_found), Toast.LENGTH_SHORT).show();
+            }
         });
+    }
+
+    private void showProgress() {
+        fragmentBinding.rlProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void hideProgress() {
+        fragmentBinding.rlProgressBar.setVisibility(View.GONE);
+    }
+
+    private void showList() {
+        fragmentBinding.rvGitrepo.setVisibility(View.VISIBLE);
+    }
+
+    private void hideList() {
+        fragmentBinding.rvGitrepo.setVisibility(View.GONE);
     }
 
     public void navigateToGitRepoDetailsActivity(GitRepoEntity gitRepoEntity) {
