@@ -8,6 +8,9 @@ import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.sujit.gitrepodemo.R;
 
@@ -18,6 +21,7 @@ public class GitRepoListActivity extends AppCompatActivity implements HasSupport
 
     @Inject
     DispatchingAndroidInjector<Fragment> supportFragmentInjector;
+    boolean doubleBackToExitPressedOnce;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +35,26 @@ public class GitRepoListActivity extends AppCompatActivity implements HasSupport
         }
     }
 
-    
+
     @Override
     public AndroidInjector<Fragment> supportFragmentInjector() {
         return supportFragmentInjector;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        doubleBackToExitPressedOnce = false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+        } else {
+            doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+            new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 3000);
+        }
     }
 }

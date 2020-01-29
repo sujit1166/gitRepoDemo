@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
@@ -19,6 +20,8 @@ import android.view.ViewGroup;
 import com.sujit.gitrepodemo.AppConstants;
 import com.sujit.gitrepodemo.R;
 import com.sujit.gitrepodemo.data.local.entity.GitRepoEntity;
+import com.sujit.gitrepodemo.databinding.GitRepoDetailsFragmentBinding;
+import com.sujit.gitrepodemo.databinding.GitRepoListFragmentBinding;
 
 import javax.inject.Inject;
 
@@ -31,6 +34,7 @@ public class GitRepoDetailsFragment extends Fragment {
     ViewModelProvider.Factory viewModelFactory;
 
     private GitRepoDetailsViewModel mViewModel;
+    GitRepoDetailsFragmentBinding fragmentBinding;
 
     GitRepoEntity gitRepoEntity;
     private String TAG = getClass().getName();
@@ -58,7 +62,9 @@ public class GitRepoDetailsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.git_repo_details_fragment, container, false);
+        fragmentBinding = DataBindingUtil.inflate(
+                inflater, R.layout.git_repo_details_fragment, container, false);
+        return fragmentBinding.getRoot();
     }
 
     @Override

@@ -8,6 +8,9 @@ import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.sujit.gitrepodemo.AppConstants;
 import com.sujit.gitrepodemo.R;
@@ -20,6 +23,7 @@ public class GitRepoDetailsActivity extends AppCompatActivity implements HasSupp
 
     @Inject
     DispatchingAndroidInjector<Fragment> supportFragmentInjector;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,4 +41,5 @@ public class GitRepoDetailsActivity extends AppCompatActivity implements HasSupp
     public AndroidInjector<Fragment> supportFragmentInjector() {
         return supportFragmentInjector;
     }
+
 }
