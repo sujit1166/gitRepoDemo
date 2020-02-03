@@ -1,45 +1,24 @@
 package com.sujit.gitrepodemo.ui.gitRepoDetails;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import dagger.android.AndroidInjection;
-import dagger.android.AndroidInjector;
-import dagger.android.DispatchingAndroidInjector;
-import dagger.android.support.HasSupportFragmentInjector;
-
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.sujit.gitrepodemo.AppConstants;
 import com.sujit.gitrepodemo.R;
-import com.sujit.gitrepodemo.data.local.entity.GitRepoEntity;
 
-import javax.inject.Inject;
-
-public class GitRepoDetailsActivity extends AppCompatActivity implements HasSupportFragmentInjector {
-
-
-    @Inject
-    DispatchingAndroidInjector<Fragment> supportFragmentInjector;
-
+public class GitRepoDetailsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.git_repo_details_activity);
-        AndroidInjection.inject(this);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, GitRepoDetailsFragment.newInstance(getIntent().getParcelableExtra(AppConstants.GITREPOENTITY_INTENT)))
                     .commitNow();
         }
-    }
-
-    @Override
-    public AndroidInjector<Fragment> supportFragmentInjector() {
-        return supportFragmentInjector;
     }
 
 }

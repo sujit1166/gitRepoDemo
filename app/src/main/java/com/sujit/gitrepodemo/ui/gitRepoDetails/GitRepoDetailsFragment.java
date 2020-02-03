@@ -3,6 +3,16 @@ package com.sujit.gitrepodemo.ui.gitRepoDetails;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.squareup.picasso.Picasso;
+import com.sujit.gitrepodemo.R;
+import com.sujit.gitrepodemo.data.local.entity.GitRepoEntity;
+import com.sujit.gitrepodemo.databinding.GitRepoDetailsFragmentBinding;
+
+import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,22 +20,7 @@ import androidx.core.app.ShareCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import dagger.android.support.AndroidSupportInjection;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.squareup.picasso.Picasso;
-import com.sujit.gitrepodemo.AppConstants;
-import com.sujit.gitrepodemo.R;
-import com.sujit.gitrepodemo.data.local.entity.GitRepoEntity;
-import com.sujit.gitrepodemo.databinding.GitRepoDetailsFragmentBinding;
-import com.sujit.gitrepodemo.databinding.GitRepoListFragmentBinding;
-
-import javax.inject.Inject;
 
 import static com.sujit.gitrepodemo.AppConstants.GITREPOENTITY_INTENT;
 
@@ -34,11 +29,9 @@ public class GitRepoDetailsFragment extends Fragment {
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;
-
-    private GitRepoDetailsViewModel mViewModel;
     GitRepoDetailsFragmentBinding fragmentBinding;
-
     GitRepoEntity gitRepoEntity;
+    private GitRepoDetailsViewModel mViewModel;
     private String TAG = getClass().getName();
 
     public GitRepoDetailsFragment() {

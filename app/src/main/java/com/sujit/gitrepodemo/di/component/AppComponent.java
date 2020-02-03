@@ -13,6 +13,7 @@ import javax.inject.Singleton;
 
 import dagger.BindsInstance;
 import dagger.Component;
+import dagger.android.AndroidInjectionModule;
 import dagger.android.support.AndroidSupportInjectionModule;
 
 
@@ -22,7 +23,9 @@ import dagger.android.support.AndroidSupportInjectionModule;
         FragmentModule.class,
         ActivityModule.class,
         DataBaseModule.class,
-        AndroidSupportInjectionModule.class})
+        AndroidSupportInjectionModule.class,
+        AndroidInjectionModule.class
+})
 @Singleton
 public interface AppComponent {
 

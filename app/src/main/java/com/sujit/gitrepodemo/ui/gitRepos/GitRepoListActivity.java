@@ -16,17 +16,15 @@ import com.sujit.gitrepodemo.R;
 
 import javax.inject.Inject;
 
-public class GitRepoListActivity extends AppCompatActivity implements HasSupportFragmentInjector {
+public class GitRepoListActivity extends AppCompatActivity {
 
 
-    @Inject
-    DispatchingAndroidInjector<Fragment> supportFragmentInjector;
     boolean doubleBackToExitPressedOnce;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         AndroidInjection.inject(this);
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.git_repo_list_activity);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
@@ -35,11 +33,6 @@ public class GitRepoListActivity extends AppCompatActivity implements HasSupport
         }
     }
 
-
-    @Override
-    public AndroidInjector<Fragment> supportFragmentInjector() {
-        return supportFragmentInjector;
-    }
 
     @Override
     protected void onResume() {
